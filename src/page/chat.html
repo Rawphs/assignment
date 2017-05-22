@@ -1,0 +1,67 @@
+<template>
+  <div class="container-fluid background">
+    <div class="row align-items-center">
+      <div class="col-md-2 offset-1 list top-margin">
+        <div class="row muli text-center">
+          <h3 class="col align-self-center">${user.name}</h3>
+        </div>
+        <div class="row muli text-center logout">
+          <p class="col align-self-center" click.delegate="logout()">Logout</p>
+        </div>
+        <div class="row">
+          <button class="col button" click.trigger="openModal()">New group</button>
+        </div>
+        <div class="chat-list">
+          <div repeat.for="data of conversations" class=" row list-item" click.delegate="openChat(data)">
+            <div if.bind="data.users.length" class="col chat-title">
+              <div class="row no-gutters">
+                <div class="${!data.conversation.lastseen ? 'col-sm-0 unread align-self-auto' : 'col-sm-0'}" ></div>
+                <h6 class="col">${data.conversation.name}</h6>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 offset-1 top-margin">
+        <div show.bind="activeChat.conversationId">
+          <div class="row">
+            <h3 class="col muli">${activeChat.name}</h3>
+          </div>
+          <div class="row">
+            <p class="col"><i>${participants}</i></p>
+          </div>
+          <hr class="row m-0">
+          <div class="row chat-messages-background">
+            <div id="chat" class="d-flex w-100 flex-column-reverse chat-messages">
+              <div repeat.for="message of messages">
+                <div if.bind="message.senderId === user.id" class="offset-2 text-right">
+                  <h6><span class="date"> ${message.timestamp}</span><strong>${users[message.senderId]}</strong></h6>
+                  <p>${message.message}</p>
+                </div>
+
+                <div if.bind="message.senderId !== user.id" class="text-left col-10">
+                  <h6><strong>${users[message.senderId]}</strong><span class="date">${message.timestamp}</span></h6>
+                  <p>${message.message}</p>
+                </div>
+              </div>
+              <span show.bind="hasPreviousMessages" click.delegate="fetchMessages()" class="anchor">Load previous messages</span>
+            </div>
+          </div>
+          <hr class="row m-0">
+          <div class="row">
+            <form role="form" class="col form-horizontal" submit.delegate="sendMessage()">
+              <div class="form-group">
+                <div class="row">
+                  <input class="form-control chat-input" value.bind="message">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+

@@ -1,0 +1,32 @@
+<template>
+  <ux-dialog class="ux-dialog-open muli w-100 container">
+    <ux-dialog-header>
+      <h2>${title}</h2>
+    </ux-dialog-header>
+
+    <ux-dialog-body>
+      <form class="open-sans">
+        <div class="form-group row">
+          <div class="col">
+            <label for="group">Group name</label>
+            <input type="text" class="form-control" id="group" value.bind="name" placeholder="Awesome group">
+          </div>
+        </div>
+        <div class="row" repeat.for="user of availableUsers">
+          <div class="col">
+            <label class="checkbox-inline">
+              <input type="checkbox" id="${$index}" value.bind="user.id" checked.bind="users">${user.name}
+            </label>
+          </div>
+        </div>
+      </form>
+    </ux-dialog-body>
+
+    <ux-dialog-footer>
+      <button click.trigger="controller.cancel()">Cancel</button>
+      <button click.trigger="controller.ok({name, users})">Ok</button>
+    </ux-dialog-footer>
+
+  </ux-dialog>
+
+</template>
