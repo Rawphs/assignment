@@ -96,7 +96,7 @@ export class ChatScreen {
     this.fetchMessages(conversationId)
       .then(() => this.api.request('PUT', `/conversation/${conversationId}/seen/${this.user.id}`))
       .then(timestamp => {
-        data.conversation.lastseen = timestamp.lastseen
+        data.conversation.lastseen = timestamp.lastseen;
       })
       .catch(console.error);
   }

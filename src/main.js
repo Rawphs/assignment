@@ -4,9 +4,6 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .globalResources([
-      'component/list'
-    ])
     .plugin('aurelia-dialog')
     .plugin('aurelia-api', config => {
       config

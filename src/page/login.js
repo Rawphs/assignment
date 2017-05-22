@@ -32,7 +32,6 @@ export class Login {
 
     localStorage.setItem('user', JSON.stringify(user[0]));
 
-
-    this.router.navigate('chat');
+    return this.router.navigate('chat');
   }
 }
