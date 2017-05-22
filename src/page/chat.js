@@ -41,6 +41,20 @@ export class ChatScreen {
       .catch(console.error);
   }
 
+  fetchConversation(id) {
+    return this.api.request('GET', `conversation/${id}`)
+      .then(response => {
+        if (!response) {
+          return;
+        }
+
+        this.conversations.push(response);
+
+        return response;
+      })
+      .catch(console.error);
+  }
+
   openModal() {
     this.dialog.open({viewModel: Modal, model: {title: 'Create new group', user: this.user}})
       .whenClosed(response => {
@@ -51,7 +65,8 @@ export class ChatScreen {
         response.output.users = response.output.users.join(',');
 
         this.api.request('POST', 'conversation/group', response.output)
-          .then(this.fetchConversations())
+          .then(response => this.fetchConversation(response.id))
+          .then(conversation => this.openChat(conversation))
           .catch(console.error);
       });
   }
@@ -81,7 +96,7 @@ export class ChatScreen {
   }
 
   openChat(data) {
-    let conversationId = data.conversation.conversationId;
+    let conversationId = data.conversation.conversationId || data.conversation.id;
 
     if (conversationId === this.activeChat.conversationId) {
       return;

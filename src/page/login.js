@@ -1,5 +1,5 @@
 import {bindable, inject} from 'aurelia-framework';
-import {Router}       from 'aurelia-router';
+import {Router} from 'aurelia-router';
 import {users} from '../lib/resources';
 
 @inject(Router)
