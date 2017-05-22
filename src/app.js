@@ -37,14 +37,6 @@ class AuthorizeStep {
   user = JSON.parse(localStorage.getItem('user'));
 
   run(navigationInstruction, next) {
-    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.auth)) {
-      let isLoggedIn = !!this.user && typeof this.user !== 'undefined';
-
-      if (!isLoggedIn) {
-        return next.cancel(new Redirect('login'));
-      }
-    }
-
     return next();
   }
 
