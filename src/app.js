@@ -14,9 +14,9 @@ export class App {
         name    : 'chat',
         moduleId: 'page/chat',
         nav     : true,
+        auth    : true,
         title   : 'Chat',
         settings: {
-          auth: true,
           user: step.getUser()
         }
       },
@@ -35,8 +35,11 @@ export class App {
 
 class AuthorizeStep {
   user = JSON.parse(localStorage.getItem('user'));
-
+ 
   run(navigationInstruction, next) {
+     if (!this.user) {
+       return next(new Redirect('login'));
+     }
     return next();
   }
 
